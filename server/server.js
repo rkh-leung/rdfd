@@ -1,4 +1,3 @@
-const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 
@@ -9,6 +8,6 @@ const api = require('../routes/routes')
 server.use(bodyParser.json())
 
 // Routes
-server.use('/api', api)
+server.use('/', api)
 
 module.exports = server

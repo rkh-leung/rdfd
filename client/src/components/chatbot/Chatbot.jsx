@@ -3,8 +3,14 @@ import axios from 'axios'
 import Message from './Message'
 
 export default class Chatbot extends Component {
-	state = {
-		message: []
+	constructor(props) {
+		super(props)
+
+		this._handleInputKeyPress = this._handleInputKeyPress.bind(this)
+
+		this.state = {
+			messages: []
+		}
 	}
 
 	async df_text_query(text) {
@@ -16,9 +22,10 @@ export default class Chatbot extends Component {
 				}
 			}
 		}
+
 		this.setState({ messages: [...this.state.messages, says] })
 		const res = axios.post('/api/df_text_query', { text })
-
+		console.log(res)
 		for (let msg of res.data.fulfillmentMessages) {
 			says = {
 				speaks: 'bot',
@@ -27,6 +34,7 @@ export default class Chatbot extends Component {
 			this.setState({ messages: [...this.state.messages, says] })
 		}
 	}
+
 	async df_event_query(event) {
 		const res = await axios.post('/api/df_event_query', { event })
 
@@ -59,6 +67,13 @@ export default class Chatbot extends Component {
 		}
 	}
 
+	_handleInputKeyPress(e) {
+		if (e.key === 'Enter') {
+			this.df_text_query(e.target.value)
+			e.target.value = ''
+		}
+	}
+
 	render() {
 		return (
 			<>
@@ -69,7 +84,7 @@ export default class Chatbot extends Component {
 					>
 						<h2>Chatbot</h2>
 						{this.renderMessages(this.state.messages)}
-						<input type="text" />
+						<input type="text" onKeyPress={this._handleInputKeyPress} />
 					</div>
 				</div>
 			</>
