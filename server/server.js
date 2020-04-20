@@ -1,12 +1,12 @@
 const path = require('path')
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const server = express()
 
 const api = require('../routes/routes')
 // Middleware
-server.use(express.json())
-server.use(express.static(path.join(__dirname, './public')))
+server.use(bodyParser.json())
 
 // Routes
 server.use('/api', api)
