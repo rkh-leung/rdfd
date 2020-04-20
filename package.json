@@ -1,0 +1,33 @@
+{
+	"name": "rdfd",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server/index.js",
+	"engines": {
+		"node": "12.16.1",
+		"npm": "6.13.4"
+	},
+	"scripts": {
+		"start": "node server/index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/rkh-leung/rdfd.git"
+	},
+	"author": "Raymond Leung",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/rkh-leung/rdfd/issues"
+	},
+	"homepage": "https://github.com/rkh-leung/rdfd#readme",
+	"dependencies": {
+		"axios": "^0.19.2",
+		"dialogflow": "^1.2.0",
+		"express": "^4.17.1",
+		"npm-run-all": "^4.1.5"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.2"
+	}
+}
