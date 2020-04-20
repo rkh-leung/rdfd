@@ -12,7 +12,8 @@
 		"frontend": "npm run start --prefix client",
 		"backend": "nodemon index.js",
 		"dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
 	},
 	"repository": {
 		"type": "git",
