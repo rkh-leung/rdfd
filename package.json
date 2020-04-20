@@ -2,13 +2,13 @@
 	"name": "rdfd",
 	"version": "1.0.0",
 	"description": "",
-	"main": "server/index.js",
+	"main": "index.js",
 	"engines": {
 		"node": "12.16.1",
 		"npm": "6.13.4"
 	},
 	"scripts": {
-		"start": "node server/index.js",
+		"start": "node index.js",
 		"frontend": "npm run start --prefix client",
 		"backend": "nodemon index.js",
 		"dev": "concurrently \"npm run backend\" \"npm run frontend\"",

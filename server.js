@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 
 const server = express()
 
-const api = require('../routes/routes')
+const api = require('./routes/routes')
 // Middleware
 server.use(bodyParser.json())
 
