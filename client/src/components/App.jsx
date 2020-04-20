@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import Chatbot from './chatbot/Chatbot'
 
 class App extends Component {
 	render() {
 		return (
 			<>
-				<h1>React development has begun!</h1>
+				<h1>Chatbot AMA</h1>
+				<Chatbot />
 			</>
 		)
 	}

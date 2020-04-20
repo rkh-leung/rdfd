@@ -27,15 +27,15 @@ export default class Chatbot extends Component {
 			this.setState({ messages: [...this.state.messages, says] })
 		}
 	}
-	df_event_query(text) {
-		const res = await axios.post('/api/df_event_query', {event})
+	async df_event_query(event) {
+		const res = await axios.post('/api/df_event_query', { event })
 
-		for (let msg of res.datafulfillmentMessages) {
+		for (let msg of res.data.fulfillmentMessages) {
 			let says = {
 				speaks: 'bot',
 				msg: msg
 			}
-			this.setState({messages: [...this.state.messages, says]})
+			this.setState({ messages: [...this.state.messages, says] })
 		}
 	}
 
@@ -46,7 +46,13 @@ export default class Chatbot extends Component {
 	renderMessages(stateMessages) {
 		if (stateMessages) {
 			return stateMessages.map((message, i) => {
-				return <Message key={i} speaks={message.speaks} text={message.msg.text.text} />
+				return (
+					<Message
+						key={i}
+						speaks={message.speaks}
+						text={message.msg.text.text}
+					/>
+				)
 			})
 		} else {
 			return null

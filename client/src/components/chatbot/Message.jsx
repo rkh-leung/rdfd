@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Message = (props) => {
-	;<div>
+const Message = (props) => (
+	<div>
 		<div>
 			<div>
 				{props.speaks === 'bot' && (
@@ -22,6 +22,6 @@ const Message = (props) => {
 			</div>
 		</div>
 	</div>
-}
+)
 
 export default Message
