@@ -4,7 +4,7 @@ const config = require('../config/keys')
 
 
 const sessionID = config.dialogFlowSessionID
-const dfLanguageCode = config.dialogFlowSessionLanguageCode
+const languageCode = config.dialogFlowSessionLanguageCode
 const projectID = config.googleProjectID
 const credentials = {
   client_email: config.googleClientEmail,
@@ -12,18 +12,18 @@ const credentials = {
 }
 
 const sessionClient = new dialogflow.SessionsClient({ projectID, credentials })
-const sessionPath = sessionClient.sessionPath(projectID, sessionID)
 
 
 module.exports = {
-  textQuery: async (text, parameters) => {
+  textQuery: async (text, userID, parameters = {}) => {
+    let sessionPath = sessionClient.sessionPath(projectID, sessionID + userID)
     let self = module.exports
     const request = {
       session: sessionPath,
       queryInput: {
         text: {
-          text: text,
-          languageCode: dfLanguageCode
+          text,
+          languageCode
         }
       },
       queryParams: {
@@ -36,7 +36,9 @@ module.exports = {
     responses = await self.handleAction(responses)
     return responses
   },
-  eventQuery: async (event, parameters) => {
+
+  eventQuery: async (event, userID, parameters = {}) => {
+    let sessionPath = sessionClient.sessionPath(projectID, sessionID + userID)
     let self = module.exports
     const request = {
       session: sessionPath,
@@ -44,7 +46,7 @@ module.exports = {
         event: {
           name: event,
           parameters: structjson.jsonToStructProto(parameters),
-          languageCode: dfLanguageCode
+          languageCode
         }
       }
     }

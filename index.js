@@ -5,14 +5,10 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 5000;
 
-const dialogFlowRoutes = require("./routes/dialogFlow");
+const dialogFlowRoutes = require("./routes/dialogFlowRoutes");
 // const fulfillmentRoutes = require("./routes/fulfillment");
 
 app.use(bodyParser.json());
-
-app.get("/api", (req, res) => {
-  res.send({ hello: "there" });
-});
 
 app.use(dialogFlowRoutes);
 // app.use(fulfillmentRoutes);

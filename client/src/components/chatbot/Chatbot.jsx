@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Cookies from 'universal-cookie'
+import { v4 as uuid } from 'uuid'
+
 import Message from './Message'
 
+const cookies = new Cookies()
+
 export default class Chatbot extends Component {
+	messagesEnd
+	talkInput
+
 	constructor(props) {
 		super(props)
 
@@ -11,14 +19,18 @@ export default class Chatbot extends Component {
 		this.state = {
 			messages: []
 		}
+
+		if (cookies.get('userID') === undefined) {
+			cookies.set('userID', uuid(), { path: '/' })
+		}
 	}
 
-	async df_text_query(text) {
+	async df_text_query(queryText) {
 		let says = {
 			speaks: 'me',
 			message: {
 				text: {
-					text
+					text: queryText
 				}
 			}
 		}
@@ -27,34 +39,53 @@ export default class Chatbot extends Component {
 			messages: [...this.state.messages, says]
 		})
 
-		const res = await axios.post('/api/df_text_query', { text })
-
-		res.data.fulfillmentMessages.forEach((message) => {
-			says = {
-				speaks: 'bot',
-				message
+		const res = await axios.post('/api/df_text_query', {
+			text: queryText,
+			userID: cookies.get('userID')
+		})
+		let resMessages = res.data.fulfillmentMessages
+		if (resMessages) {
+			for (let i = 0; i < resMessages.length; i++) {
+				let message = resMessages[i]
+				says = {
+					speaks: 'bot',
+					message
+				}
 			}
 
 			this.setState({
 				messages: [...this.state.messages, says]
 			})
-		})
+		}
 	}
 
 	async df_event_query(event) {
-		const res = await axios.post('/api/df_event_query', { event })
-
-		for (let msg of res.data.fulfillmentMessages) {
-			let says = {
-				speaks: 'bot',
-				message: msg
+		const res = await axios.post('/api/df_event_query', {
+			event,
+			userID: cookies.get('userID')
+		})
+		let resMessages = res.data.fulfillmentMessages
+		if (resMessages) {
+			for (let i = 0; i < resMessages.length; i++) {
+				let message = resMessages[i]
+				let says = {
+					speaks: 'bot',
+					message
+				}
+				this.setState({ messages: [...this.state.messages, says] })
 			}
-			this.setState({ messages: [...this.state.messages, says] })
 		}
 	}
 
 	componentDidMount() {
 		this.df_event_query('Welcome')
+	}
+
+	componentDidUpdate() {
+		this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
+		if (this.chatInput) {
+			this.chatInput.focus()
+		}
 	}
 
 	renderMessages(stateMessages) {
@@ -90,6 +121,12 @@ export default class Chatbot extends Component {
 					>
 						<h2>Chatbot</h2>
 						{this.renderMessages(this.state.messages)}
+						<div
+							ref={(el) => {
+								this.messagesEnd = el
+							}}
+							style={{ float: 'left', clear: 'both' }}
+						></div>
 						<input type="text" onKeyPress={this._handleInputKeyPress} />
 					</div>
 				</div>
