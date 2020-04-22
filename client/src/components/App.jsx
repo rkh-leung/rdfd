@@ -11,7 +11,8 @@ class App extends Component {
 				<BrowserRouter>
 					<div>
 						<Header />
-						<h1>Chatbot AMA</h1>
+						<h1>Ubuntu 20.04 update out on Friday!</h1>
+						<h3>EDA chatbot</h3>
 						<Chatbot />
 					</div>
 				</BrowserRouter>

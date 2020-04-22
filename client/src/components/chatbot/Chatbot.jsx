@@ -17,7 +17,6 @@ export default class Chatbot extends Component {
 		this.hide = this.hide.bind(this)
 		this.show = this.show.bind(this)
 		this._handleInputKeyPress = this._handleInputKeyPress.bind(this)
-		// this._handleQuickReplyPayload = this._handleQuickReplyPayload.bind.(this)
 
 		this.state = {
 			messages: [],
@@ -108,17 +107,6 @@ export default class Chatbot extends Component {
 		}
 	}
 
-	// _handleQuickReplyPayload(payload, text) {
-	// 	switch (payload) {
-	// 		case 'quick reply event':
-	// 			this.df_event_query('event prompt')
-	// 			break
-	// 		default:
-	// 			this.df_text_query(text)
-	// 			break
-	// 	}
-	// }
-
 	show() {
 		this.setState({ showBot: true })
 	}
@@ -144,19 +132,24 @@ export default class Chatbot extends Component {
 							width: 400,
 							position: 'absolute',
 							bottom: 0,
-							right: 0
+							right: 0,
+							zIndex: 1000
 						}}
 					>
+						<div>
+							<nav>
+								<span>Chatbot</span>
+								<ul id="nav-mobile" className="right hide-on-med-and-down">
+									<li>
+										<a onClick={this.hide}>Close</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
 						<div
 							id="chatbot"
 							style={{ height: '100%', width: '100%', overflow: 'auto' }}
 						>
-							<ul id="nav-mobile" className="right hide-on-med-and-down">
-								<li>
-									<a onClick={this.hide}>Close</a>
-								</li>
-							</ul>
-							<h2>Chatbot</h2>
 							{this.renderMessages(this.state.messages)}
 							<div
 								ref={(el) => {
@@ -164,7 +157,18 @@ export default class Chatbot extends Component {
 								}}
 								style={{ float: 'left', clear: 'both' }}
 							></div>
-							<input type="text" onKeyPress={this._handleInputKeyPress} />
+							<input
+								type="text"
+								onKeyPress={this._handleInputKeyPress}
+								style={{
+									paddingRight: '1em',
+									width: '90%',
+									backgroundColor: 'white',
+									borderTop: '2px solid teal',
+									marginBottom: 0
+								}}
+								placeholder="Please be gentle to this nameless bot"
+							/>
 						</div>
 					</div>
 				</>
@@ -180,17 +184,21 @@ export default class Chatbot extends Component {
 						right: 0
 					}}
 				>
-					<ul id="nav-mobile" className="right hide-on-med-and-down">
-						<li>
-							<a onClick={this.show}>Open</a>
-						</li>
-					</ul>
-					<h2>Chatbot</h2>
+					<div>
+						<nav onClick={this.show}>
+							<span>Chatbot</span>
+							<ul id="nav-mobile" className="right hide-on-med-and-down">
+								<li>
+									<a>Open</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 					<div
 						ref={(el) => {
 							this.messagesEnd = el
 						}}
-						style={{ float: 'left', clear: 'both' }}
+						style={{ float: 'right', clear: 'both' }}
 					></div>
 				</div>
 			)
