@@ -125,53 +125,51 @@ export default class Chatbot extends Component {
 	render() {
 		if (this.state.showBot) {
 			return (
-				<>
-					<div
-						style={{
-							height: 400,
-							width: 400,
-							position: 'absolute',
-							bottom: 0,
-							right: 0,
-							zIndex: 1000
-						}}
-					>
-						<div>
-							<nav>
-								<span>Chatbot</span>
-								<ul id="nav-mobile" className="right hide-on-med-and-down">
-									<li>
-										<a onClick={this.hide}>Close</a>
-									</li>
-								</ul>
-							</nav>
-						</div>
-						<div
-							id="chatbot"
-							style={{ height: '100%', width: '100%', overflow: 'auto' }}
-						>
-							{this.renderMessages(this.state.messages)}
-							<div
-								ref={(el) => {
-									this.messagesEnd = el
-								}}
-								style={{ float: 'left', clear: 'both' }}
-							></div>
-							<input
-								type="text"
-								onKeyPress={this._handleInputKeyPress}
-								style={{
-									paddingRight: '1em',
-									width: '90%',
-									backgroundColor: 'white',
-									borderTop: '2px solid teal',
-									marginBottom: 0
-								}}
-								placeholder="Please be gentle to this nameless bot"
-							/>
-						</div>
+				<div
+					style={{
+						height: 400,
+						width: 400,
+						position: 'absolute',
+						bottom: 0,
+						right: 0,
+						zIndex: 1000
+					}}
+				>
+					<div>
+						<nav>
+							<span>Chatbot</span>
+							<ul id="nav-mobile" className="right">
+								<li>
+									<a onClick={this.hide}>Close</a>
+								</li>
+							</ul>
+						</nav>
 					</div>
-				</>
+					<div
+						id="chatbot"
+						style={{ height: '100%', width: '100%', overflow: 'auto' }}
+					>
+						{this.renderMessages(this.state.messages)}
+						<div
+							ref={(el) => {
+								this.messagesEnd = el
+							}}
+							style={{ float: 'left', clear: 'both' }}
+						></div>
+						<input
+							type="text"
+							onKeyPress={this._handleInputKeyPress}
+							style={{
+								paddingRight: '1em',
+								width: '90%',
+								backgroundColor: 'white',
+								borderTop: '2px solid teal',
+								marginBottom: 0
+							}}
+							placeholder="Please be gentle to this nameless bot"
+						/>
+					</div>
+				</div>
 			)
 		} else {
 			return (
